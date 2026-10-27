@@ -10,6 +10,8 @@ import {
   OrderPriority,
   OrderStatus,
   ServiceOrderType,
+  CicloType,
+  TecnologiaType,
 } from '@/types';
 import {
   INITIAL_CLIENTS,
@@ -118,6 +120,16 @@ interface AppContextType {
   addNewPointRequest: (
     request: Omit<NewPointRequest, 'id' | 'createdAt' | 'status'>
   ) => void;
+  addNewEquipment: (equipmentData: {
+    nome_aparelho: string;
+    comodo: string;
+    marca: string;
+    capacidade_btu: number;
+    ciclo: CicloType;
+    tecnologia: TecnologiaType;
+    endereco_apelido: string;
+    observacoes?: string;
+  }) => Equipment;
   resetDemoData: () => void;
 }
 
@@ -430,6 +442,85 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     );
   };
 
+  // Add new residential/commercial equipment directly
+  const addNewEquipment = (equipmentData: {
+    nome_aparelho: string;
+    comodo: string;
+    marca: string;
+    capacidade_btu: number;
+    ciclo: CicloType;
+    tecnologia: TecnologiaType;
+    endereco_apelido: string;
+    observacoes?: string;
+  }): Equipment => {
+    const comodoSlug = equipmentData.comodo
+      .toUpperCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^A-Z0-9]/g, '')
+      .slice(0, 4) || 'RES';
+      
+    const count = equipments.filter((e) => e.cliente_id === activeClient.id).length + 1;
+    const tagCode = `AR-${comodoSlug}-${String(count).padStart(2, '0')}`;
+    const newId = tagCode;
+    const today = new Date().toISOString().split('T')[0];
+    
+    // Calculate next preventive (+6 months)
+    const nextDate = new Date();
+    nextDate.setMonth(nextDate.getMonth() + 6);
+    const proximaPreventiva = nextDate.toISOString().split('T')[0];
+
+    const tecLabel = equipmentData.tecnologia === 'INVERTER' ? 'Inverter' : 'Convencional';
+
+    const newEquipment: Equipment = {
+      id: newId,
+      cliente_id: activeClient.id,
+      cliente_nome: activeClient.nome_completo,
+      endereco_apelido: equipmentData.endereco_apelido || activeClient.enderecos[0]?.apelido || 'Residência',
+      tag_patrimonio: tagCode,
+      tipo_unidade: 'CONJUNTO_SPLIT',
+      marca: equipmentData.marca,
+      modelo: `${equipmentData.marca} ${equipmentData.capacidade_btu} BTU ${tecLabel}`,
+      capacidade_btu: equipmentData.capacidade_btu,
+      status_instalacao: 'INSTALADO_EM_OPERACAO',
+      data_instalacao: today,
+      data_ultima_manutencao: today,
+      ciclo_meses: 6,
+      data_proxima_preventiva: proximaPreventiva,
+      qr_code_url: `https://pmoc.bigar.com.br/equipamento/${newId}`,
+      observacoes: equipmentData.observacoes || 'Aparelho cadastrado pelo cliente via aplicativo.',
+      nome_aparelho: equipmentData.nome_aparelho,
+      comodo: equipmentData.comodo,
+      ciclo: equipmentData.ciclo,
+      tecnologia: equipmentData.tecnologia,
+      name: `${equipmentData.nome_aparelho} (${equipmentData.marca} ${equipmentData.capacidade_btu.toLocaleString('pt-BR')} BTU)`,
+      location: `${equipmentData.endereco_apelido || activeClient.enderecos[0]?.apelido || 'Residência'} - ${equipmentData.comodo}`,
+      patrimonyCode: tagCode,
+      unitType: 'CONJUNTO_SPLIT',
+      brand: equipmentData.marca,
+      gasType: 'R-32 Ecológico',
+      voltage: '220V',
+      serialNumber: `SN-${Date.now().toString().slice(-6)}`,
+      daysRemaining: 180,
+      status: 'ok',
+      qrPayload: `BIGAR-${tagCode}`,
+    };
+
+    setEquipments((prev) => [newEquipment, ...prev]);
+
+    try {
+      confetti({ particleCount: 60, spread: 60, origin: { y: 0.7 } });
+    } catch {}
+
+    showToast(
+      'Aparelho Cadastrado!',
+      `"${equipmentData.nome_aparelho}" (${equipmentData.marca} ${equipmentData.capacidade_btu.toLocaleString('pt-BR')} BTUs) adicionado com sucesso!`,
+      'success'
+    );
+
+    return newEquipment;
+  };
+
   // Add new point request
   const addNewPointRequest = (
     request: Omit<NewPointRequest, 'id' | 'createdAt' | 'status'>
@@ -439,16 +530,32 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ...request,
       id: newId,
       cliente_id: activeClient.id,
-      status: 'Pendente Vistoria Técnica',
+      cliente_nome: activeClient.nome_completo,
+      status: request.adicionarComoEquipamento ? 'Ativo' : 'Pendente Vistoria Técnica',
       createdAt: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }),
     };
 
     setNewPoints((prev) => [newReq, ...prev]);
-    showToast(
-      'Solicitação de Ponto Enviada!',
-      `Protocolo ${newId} gerado para ${request.unitLocation}. A equipe técnica agendará a visita in loco.`,
-      'success'
-    );
+
+    // If customer selected to also add as registered equipment in their home:
+    if (request.adicionarComoEquipamento !== false && request.nome_aparelho) {
+      addNewEquipment({
+        nome_aparelho: request.nome_aparelho,
+        comodo: request.comodo || request.unitLocation || 'Ambiente',
+        marca: request.marca || 'Daikin',
+        capacidade_btu: request.capacidade_btu || request.estimatedBtu || 12000,
+        ciclo: request.ciclo || 'FRIO',
+        tecnologia: request.tecnologia || 'INVERTER',
+        endereco_apelido: request.endereco_apelido || activeClient.enderecos[0]?.apelido || 'Residência',
+        observacoes: request.observacoes || request.justification,
+      });
+    } else {
+      showToast(
+        'Solicitação de Ponto Enviada!',
+        `Protocolo ${newId} gerado para ${request.nome_aparelho || request.unitLocation}. A equipe técnica da Big Ar agendará a visita.`,
+        'success'
+      );
+    }
   };
 
   const resetDemoData = () => {
@@ -519,6 +626,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         completeOs,
         rateServiceOrder,
         addNewPointRequest,
+        addNewEquipment,
         resetDemoData,
       }}
     >

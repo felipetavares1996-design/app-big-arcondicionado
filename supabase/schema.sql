@@ -69,7 +69,10 @@ CREATE TABLE IF NOT EXISTS equipamentos (
   data_ultima_manutencao DATE NOT NULL DEFAULT CURRENT_DATE,
   ciclo_meses INTEGER NOT NULL DEFAULT 6,
   data_proxima_preventiva DATE GENERATED ALWAYS AS (data_ultima_manutencao + INTERVAL '6 months') STORED,
-  qr_code_url TEXT,
+  nome_aparelho TEXT, -- ex: "Split Quarto Casal", "Ar da Sala"
+  comodo TEXT, -- ex: "Quarto Principal", "Sala", "Varanda"
+  tecnologia TEXT NOT NULL DEFAULT 'INVERTER', -- 'INVERTER' ou 'CONVENCIONAL'
+  ciclo TEXT NOT NULL DEFAULT 'FRIO', -- 'FRIO' ou 'QUENTE_FRIO'
   observacoes TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL

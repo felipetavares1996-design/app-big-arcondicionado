@@ -539,22 +539,27 @@ export const INITIAL_TICKETS: ServiceOrder[] = [
 ];
 
 // ==============================================================================
-// 4. SOLICITAÇÕES DE NOVOS PONTOS
+// 4. SOLICITAÇÕES DE NOVOS PONTOS / APARELHOS (B2C & PJ)
 // ==============================================================================
 export const INITIAL_NEW_POINTS: NewPointRequest[] = [
   {
     id: 'SOL-NOVO-2024-01',
-    cliente_id: 'cli-pj-002',
-    secretaria: 'Secretaria de Educação',
-    unitLocation: 'E.M. Roberto Mario Santini - Nova Sala de Robótica',
-    roomSizeM2: 45,
-    peopleCount: 25,
+    cliente_id: 'cli-pf-001',
+    cliente_nome: 'Dr. Fernando Silveira',
+    endereco_apelido: 'Casa de Praia (Bertioga)',
+    nome_aparelho: 'Split Suíte Hóspedes',
+    comodo: 'Suíte Hóspedes',
+    marca: 'Daikin',
+    capacidade_btu: 12000,
+    ciclo: 'FRIO',
+    tecnologia: 'INVERTER',
+    observacoes: 'Instalação com passagem de tubulação pelo forro de gesso.',
+    roomSizeM2: 18,
+    peopleCount: 2,
     sunExposure: 'Tarde',
-    estimatedBtu: 30000,
-    justification: 'Inauguração de novo laboratório de tecnologia para alunos; ambiente sem ventilação cruzada com alta incidência solar vespertina.',
-    requesterName: 'Profª Tatiana Ribeiro',
-    requesterRole: 'Coordenadora Pedagógica',
     status: 'Pendente Vistoria Técnica',
     createdAt: '20/10/2024 às 16:40',
+    unitLocation: 'Casa de Praia (Bertioga) - Suíte Hóspedes',
+    estimatedBtu: 12000,
   },
 ];

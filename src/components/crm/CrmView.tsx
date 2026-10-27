@@ -248,17 +248,21 @@ export default function CrmView() {
                       {item.status}
                     </span>
                   </div>
-                  <h4 className="font-bold text-sm text-white">{item.unitLocation}</h4>
-                  <p className="text-xs text-slate-400 italic">&quot;{item.justification}&quot;</p>
+                  <h4 className="font-bold text-sm text-white">
+                    {item.nome_aparelho || item.unitLocation}
+                  </h4>
+                  {(item.observacoes || item.justification) && (
+                    <p className="text-xs text-slate-400 italic">&quot;{item.observacoes || item.justification}&quot;</p>
+                  )}
 
                   <div className="grid grid-cols-3 gap-2 pt-2 border-t border-slate-800 text-[11px] text-slate-400">
-                    <div>Área: <strong className="text-white">{item.roomSizeM2} m²</strong></div>
-                    <div>Pessoas: <strong className="text-white">{item.peopleCount}</strong></div>
-                    <div>Sugerido: <strong className="text-sky-400">{item.estimatedBtu.toLocaleString('pt-BR')} BTUs</strong></div>
+                    <div>Cômodo: <strong className="text-white">{item.comodo || 'Ambiente'}</strong></div>
+                    <div>Marca: <strong className="text-white">{item.marca || 'Padrão'}</strong></div>
+                    <div>Capacidade: <strong className="text-sky-400">{(item.capacidade_btu || item.estimatedBtu || 12000).toLocaleString('pt-BR')} BTUs</strong></div>
                   </div>
 
                   <div className="pt-2 border-t border-slate-800 text-[10px] text-slate-500 flex items-center justify-between">
-                    <span>Solicitado por: {item.requesterName}</span>
+                    <span>{item.cliente_nome || item.endereco_apelido || 'Cliente Residencial'}</span>
                     <span>{item.createdAt}</span>
                   </div>
                 </div>

@@ -107,7 +107,7 @@ export default function EquipmentDetailModal() {
             <div className="mt-2.5 flex items-center justify-between pt-2 border-t border-slate-800/80 text-[11px] text-slate-400">
               <div className="flex items-center gap-1.5">
                 <Tag className="w-3 h-3 text-slate-500" />
-                <span>Patrimônio: <strong className="text-slate-200">{selectedEquipment.patrimonyCode}</strong></span>
+                <span>Tag / Código: <strong className="text-slate-200">{selectedEquipment.tag_patrimonio || selectedEquipment.patrimonyCode}</strong></span>
               </div>
               <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                 selectedEquipment.status_instalacao === 'INSTALADO_EM_OPERACAO'

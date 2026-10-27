@@ -335,9 +335,18 @@ export default function MobileAppView() {
                           </div>
 
                           {/* Equipment Name & Recinto */}
-                          <h4 className="text-xs font-bold text-slate-200 line-clamp-1">{eq.name}</h4>
+                          <div className="flex items-center justify-between gap-1">
+                            <h4 className="text-xs font-bold text-slate-200 line-clamp-1">
+                              {eq.nome_aparelho || eq.name}
+                            </h4>
+                            {eq.comodo && (
+                              <span className="text-[9px] bg-sky-500/10 text-sky-300 font-bold px-1.5 py-0.5 rounded border border-sky-500/20 shrink-0">
+                                {eq.comodo}
+                              </span>
+                            )}
+                          </div>
                           <p className="text-[11px] text-slate-400 truncate mt-0.5 flex items-center gap-1">
-                            <Home className="w-3 h-3 text-slate-500" />
+                            <Home className="w-3 h-3 text-slate-500 shrink-0" />
                             <span>{eq.endereco_apelido}</span>
                           </p>
 

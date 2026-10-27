@@ -64,12 +64,15 @@ export interface PmocReportData {
   observations: string;
 }
 
+export type CicloType = 'FRIO' | 'QUENTE_FRIO';
+export type TecnologiaType = 'INVERTER' | 'CONVENCIONAL';
+
 export interface Equipment {
   id: string;
   cliente_id: string;
   cliente_nome?: string;
-  endereco_apelido: string; // Apelido do recinto onde está instalado
-  tag_patrimonio: string; // ex: "AR-SAL-001"
+  endereco_apelido: string; // Apelido do recinto onde está instalado (ex: Casa de Praia, Apto Riviera)
+  tag_patrimonio: string; // ex: "AR-SAL-001" ou "AR-QUARTO-01"
   tipo_unidade: UnitType;
   marca: string;
   modelo: string;
@@ -82,7 +85,11 @@ export interface Equipment {
   qr_code_url?: string;
   observacoes?: string;
   
-  // UI & Compatibility attributes
+  // B2C & UI attributes
+  nome_aparelho?: string; // ex: "Split Quarto Casal", "Ar da Sala"
+  comodo?: string; // ex: "Quarto Principal", "Sala de Estar", "Escritório", "Varanda"
+  ciclo?: CicloType; // 'FRIO' | 'QUENTE_FRIO'
+  tecnologia?: TecnologiaType; // 'INVERTER' | 'CONVENCIONAL'
   name: string;
   location: string;
   patrimonyCode: string;
@@ -147,17 +154,29 @@ export type TicketStatus = OrderStatus;
 export interface NewPointRequest {
   id: string;
   cliente_id?: string;
-  secretaria?: string;
-  unitLocation: string;
-  roomSizeM2: number;
-  peopleCount: number;
-  sunExposure: 'Manhã' | 'Tarde' | 'Dia todo' | 'Sombra';
-  estimatedBtu: number;
-  justification: string;
-  requesterName: string;
-  requesterRole: string;
-  status: 'Pendente Vistoria Técnica' | 'Em Análise Orçamentária' | 'Aprovado para Instalação';
+  cliente_nome?: string;
+  endereco_apelido?: string;
+  nome_aparelho: string; // ex: "Split Quarto Casal", "Ar da Sala"
+  comodo: string; // ex: "Sala", "Quarto", "Escritório", "Varanda"
+  marca: string; // ex: "LG", "Daikin", "Midea", "Samsung"
+  capacidade_btu: number; // ex: 9000, 12000, 18000
+  ciclo: CicloType; // 'FRIO' | 'QUENTE_FRIO'
+  tecnologia: TecnologiaType; // 'INVERTER' | 'CONVENCIONAL'
+  observacoes?: string;
+  roomSizeM2?: number;
+  peopleCount?: number;
+  sunExposure?: 'Manhã' | 'Tarde' | 'Dia todo' | 'Sombra';
+  adicionarComoEquipamento?: boolean;
+  status: 'Ativo' | 'Pendente Vistoria Técnica' | 'Em Análise Orçamentária' | 'Aprovado para Instalação';
   createdAt: string;
+
+  // Campos de compatibilidade legados
+  secretaria?: string;
+  unitLocation?: string;
+  estimatedBtu?: number;
+  justification?: string;
+  requesterName?: string;
+  requesterRole?: string;
 }
 
 export type ViewMode = 'client' | 'crm' | 'split';
