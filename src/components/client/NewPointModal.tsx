@@ -162,8 +162,9 @@ export default function NewPointModal() {
         </div>
 
         {/* Scrollable Form Body */}
-        <form onSubmit={handleSubmit} className="p-4 sm:p-5 space-y-4 text-xs overflow-y-auto">
-          {/* Imóvel Selector */}
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0 overflow-hidden">
+          <div className="p-4 sm:p-5 space-y-4 text-xs overflow-y-auto flex-1">
+            {/* Imóvel Selector */}
           <div>
             <label className="block text-slate-700 font-bold mb-1 flex items-center gap-1.5">
               <Home className="w-3.5 h-3.5 text-blue-800" />
@@ -477,18 +478,20 @@ export default function NewPointModal() {
             />
           </div>
 
-          {/* Action Buttons */}
-          <div className="pt-2 flex items-center gap-3">
+          </div>
+
+          {/* Action Buttons - Pinned at Bottom */}
+          <div className="p-3 sm:p-4 bg-slate-50 border-t border-slate-200 flex items-center gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setIsNewPointModalOpen(false)}
-              className="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition"
+              className="flex-1 py-2.5 rounded-xl bg-slate-200/80 hover:bg-slate-300 text-slate-700 font-bold transition text-xs"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="flex-1 py-2.5 rounded-xl bg-[#0a2540] hover:bg-blue-900 text-white font-bold shadow-md shadow-blue-950/20 flex items-center justify-center gap-2 transition transform active:scale-95"
+              className="flex-1 py-2.5 rounded-xl bg-[#0a2540] hover:bg-blue-900 text-white font-bold shadow-md shadow-blue-950/20 flex items-center justify-center gap-2 transition transform active:scale-95 text-xs"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Salvar Aparelho</span>

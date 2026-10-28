@@ -71,10 +71,10 @@ export default function OpenTicketModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="bg-white border border-slate-200 w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="bg-white border border-slate-200 w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[92vh]">
         {/* Header */}
-        <div className="p-4 bg-[#0a192f] border-b border-blue-900 flex items-center justify-between text-white">
+        <div className="p-4 bg-[#0a192f] border-b border-blue-900 flex items-center justify-between text-white shrink-0">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-blue-800/60 text-blue-200 flex items-center justify-center border border-blue-700">
               <Wrench className="w-5 h-5 text-blue-200" />
@@ -92,39 +92,39 @@ export default function OpenTicketModal() {
           </button>
         </div>
 
-        {/* Equipment Identification Box */}
-        <div className="p-4 bg-slate-50 border-b border-slate-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div>
-            <span className="text-[10px] text-slate-500 uppercase font-semibold block">Aparelho Selecionado</span>
-            <div className="flex items-center gap-2 mt-0.5">
-              <span className="font-bold text-blue-700 font-mono text-sm">{currentEquipment.tag_patrimonio}</span>
-              <span className="text-slate-800 font-semibold">
-                ({currentEquipment.marca} {currentEquipment.capacidade_btu.toLocaleString('pt-BR')} BTU)
-              </span>
+        {/* Form Body with Sticky Footer */}
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0 overflow-hidden">
+          <div className="overflow-y-auto flex-1 p-4 sm:p-5 space-y-4 text-xs">
+            {/* Equipment Identification Box */}
+            <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <span className="text-[10px] text-slate-500 uppercase font-semibold block">Aparelho Selecionado</span>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <span className="font-bold text-blue-700 font-mono text-sm">{currentEquipment.tag_patrimonio}</span>
+                  <span className="text-slate-800 font-semibold">
+                    ({currentEquipment.marca} {currentEquipment.capacidade_btu.toLocaleString('pt-BR')} BTU)
+                  </span>
+                </div>
+                <p className="text-[10px] text-slate-500 mt-0.5">{currentEquipment.endereco_apelido} • {currentEquipment.name}</p>
+              </div>
+
+              {clientEquipments.length > 1 && (
+                <select
+                  value={currentEquipment.id}
+                  onChange={(e) => {
+                    const found = clientEquipments.find((eq) => eq.id === e.target.value);
+                    if (found) setSelectedEquipment(found);
+                  }}
+                  className="bg-white border border-slate-300 text-slate-800 text-[11px] rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-blue-600 max-w-[220px]"
+                >
+                  {clientEquipments.map((eq) => (
+                    <option key={eq.id} value={eq.id}>
+                      {eq.tag_patrimonio} - {eq.name}
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
-            <p className="text-[10px] text-slate-500 mt-0.5">{currentEquipment.endereco_apelido} • {currentEquipment.name}</p>
-          </div>
-
-          {clientEquipments.length > 1 && (
-            <select
-              value={currentEquipment.id}
-              onChange={(e) => {
-                const found = clientEquipments.find((eq) => eq.id === e.target.value);
-                if (found) setSelectedEquipment(found);
-              }}
-              className="bg-white border border-slate-300 text-slate-800 text-[11px] rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-blue-600 max-w-[220px]"
-            >
-              {clientEquipments.map((eq) => (
-                <option key={eq.id} value={eq.id}>
-                  {eq.tag_patrimonio} - {eq.name}
-                </option>
-              ))}
-            </select>
-          )}
-        </div>
-
-        {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-5 space-y-4 text-xs">
           {/* Service Type Selection */}
           <div>
             <label className="block text-slate-700 font-bold mb-1.5">
@@ -250,22 +250,23 @@ export default function OpenTicketModal() {
               </button>
             </div>
           </div>
+        </div>
 
-          {/* Buttons */}
-          <div className="pt-2 flex items-center gap-3">
+          {/* Sticky Buttons Footer */}
+          <div className="p-3 sm:p-4 bg-slate-50 border-t border-slate-200 flex items-center gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setIsOpenTicketModalOpen(false)}
-              className="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition"
+              className="flex-1 py-2.5 rounded-xl bg-slate-200/80 hover:bg-slate-300 text-slate-700 font-bold transition text-xs"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="flex-1 py-2.5 rounded-xl bg-[#0a2540] hover:bg-blue-900 text-white font-bold shadow-md flex items-center justify-center gap-2 transition"
+              className="flex-1 py-2.5 rounded-xl bg-[#0a2540] hover:bg-blue-900 text-white font-bold shadow-md shadow-blue-950/20 flex items-center justify-center gap-2 transition text-xs transform active:scale-95"
             >
               <Check className="w-4 h-4" />
-              <span>Confirmar Abertura de OS</span>
+              <span>Confirmar Abertura</span>
             </button>
           </div>
         </form>

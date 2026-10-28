@@ -74,11 +74,11 @@ export default function MobileAppView() {
   ).length;
 
   return (
-    <div className="flex flex-col items-center justify-center py-6 px-4">
-      {/* Smartphone Outer Chassis Simulator */}
-      <div className="w-full max-w-md bg-slate-950 rounded-[44px] p-3 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] border-4 border-slate-800 relative">
-        {/* Phone Top Notch / Dynamic Island */}
-        <div className="w-full flex items-center justify-between px-6 pt-2 pb-1 text-slate-400 text-xs font-semibold select-none">
+    <div className="flex flex-col items-center justify-center py-0 md:py-6 px-0 md:px-4 w-full">
+      {/* Smartphone Outer Chassis Simulator (Mobile: edge-to-edge full width; Desktop: sleek phone chassis) */}
+      <div className="w-full md:max-w-md bg-transparent md:bg-slate-950 rounded-none md:rounded-[44px] p-0 md:p-3 shadow-none md:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] border-0 md:border-4 md:border-slate-800 relative">
+        {/* Phone Top Notch / Dynamic Island (Only visible on desktop simulator) */}
+        <div className="hidden md:flex w-full items-center justify-between px-6 pt-2 pb-1 text-slate-400 text-xs font-semibold select-none">
           <span>09:41</span>
           <div className="w-24 h-4 bg-slate-900 rounded-full flex items-center justify-center">
             <div className="w-2.5 h-2.5 rounded-full bg-slate-950/80 mr-2" />
@@ -92,7 +92,7 @@ export default function MobileAppView() {
         </div>
 
         {/* Mobile Screen Inside */}
-        <div className="bg-slate-50 rounded-[34px] overflow-hidden border border-slate-700 min-h-[660px] flex flex-col text-slate-800">
+        <div className="bg-slate-50 rounded-none md:rounded-[34px] overflow-hidden border-0 md:border md:border-slate-700 min-h-screen md:min-h-[660px] flex flex-col text-slate-800">
           {/* Header: Client Identity & Switcher (Deep Navy Blue) */}
           <div className="bg-[#0a192f] p-4 border-b border-blue-950 space-y-3 text-white">
             {/* Top row: Client Selection Pill & QR Scanner */}
