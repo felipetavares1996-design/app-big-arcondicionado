@@ -272,29 +272,29 @@ export default function QrScannerModal() {
   if (!isScannerOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="bg-slate-900 border border-slate-700 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[95vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="bg-white border border-slate-200 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[95vh]">
         {/* Modal Header */}
-        <div className="p-4 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between">
+        <div className="p-4 bg-[#0a192f] border-b border-blue-900 flex items-center justify-between text-white">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-600 to-blue-500 text-white flex items-center justify-center shadow-md">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-700 to-sky-500 text-white flex items-center justify-center shadow-md">
               <Camera className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
                 <h3 className="text-sm font-bold text-white tracking-tight">Leitor de QR Code</h3>
-                <span className="text-[9px] bg-emerald-500/20 text-emerald-400 font-bold px-2 py-0.2 rounded-full border border-emerald-500/30">
+                <span className="text-[9px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.2 rounded-full border border-emerald-400/40">
                   Câmera Ativa
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-blue-200/80">
                 Aponte a câmera para a etiqueta no ar-condicionado
               </p>
             </div>
           </div>
           <button
             onClick={() => setIsScannerOpen(false)}
-            className="p-1.5 rounded-full bg-slate-800 text-slate-400 hover:text-white transition"
+            className="p-1.5 rounded-full bg-white/10 text-white hover:bg-white/20 transition"
           >
             <X className="w-4 h-4" />
           </button>
@@ -447,36 +447,36 @@ export default function QrScannerModal() {
         </div>
 
         {/* Manual Code Input & Quick Simulator */}
-        <div className="p-4 bg-slate-900 border-t border-slate-800 space-y-3">
+        <div className="p-4 bg-slate-50 border-t border-slate-200 space-y-3">
           {/* Manual Digitation Fallback */}
           <form onSubmit={handleManualSubmit} className="flex items-center gap-2">
             <div className="relative flex-1">
-              <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-slate-500" />
+              <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-slate-400" />
               <input
                 type="text"
                 placeholder="Digitar código manual (ex: AR-BER-001)"
                 value={manualCode}
                 onChange={(e) => setManualCode(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500 font-mono uppercase"
+                className="w-full bg-white border border-slate-300 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 font-mono uppercase"
               />
             </div>
             <button
               type="submit"
               disabled={!manualCode.trim()}
-              className="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 disabled:opacity-40 text-white font-bold text-xs transition"
+              className="px-3.5 py-2 rounded-xl bg-[#0a2540] hover:bg-blue-900 disabled:opacity-40 text-white font-bold text-xs transition shadow-sm"
             >
               Buscar
             </button>
           </form>
 
           {/* Quick Simulation Chips */}
-          <div className="pt-1 border-t border-slate-800/80">
+          <div className="pt-2 border-t border-slate-200">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[11px] font-semibold text-slate-400 flex items-center gap-1.5">
-                <Sparkles className="w-3 h-3 text-sky-400" />
+              <span className="text-[11px] font-semibold text-slate-600 flex items-center gap-1.5">
+                <Sparkles className="w-3 h-3 text-blue-600" />
                 Simular leitura rápida (Demonstração):
               </span>
-              <span className="text-[10px] text-slate-500">1-clique</span>
+              <span className="text-[10px] text-slate-400">1-clique</span>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 max-h-36 overflow-y-auto pr-0.5 no-scrollbar">
@@ -484,10 +484,10 @@ export default function QrScannerModal() {
                 <button
                   key={eq.id}
                   onClick={() => handleDecodedText(eq.id)}
-                  className="p-2 rounded-xl bg-slate-950/80 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/50 text-left transition group"
+                  className="p-2 rounded-xl bg-white hover:bg-blue-50/60 border border-slate-200 hover:border-blue-500 text-left transition group shadow-2xs"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono font-bold text-[11px] text-white group-hover:text-sky-300 truncate">
+                    <span className="font-mono font-bold text-[11px] text-slate-900 group-hover:text-blue-900 truncate">
                       {eq.tag_patrimonio}
                     </span>
                     <span
@@ -500,7 +500,7 @@ export default function QrScannerModal() {
                       }`}
                     />
                   </div>
-                  <span className="text-[10px] text-slate-400 block truncate mt-0.5">
+                  <span className="text-[10px] text-slate-500 block truncate mt-0.5">
                     {eq.nome_aparelho || eq.name}
                   </span>
                 </button>

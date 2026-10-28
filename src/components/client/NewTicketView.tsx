@@ -130,9 +130,9 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
   return (
     <div className="space-y-4 animate-in fade-in duration-200">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-amber-950/40 via-slate-900 to-sky-950/30 p-3.5 rounded-2xl border border-amber-500/30 flex items-center justify-between">
+      <div className="bg-[#0a192f] p-3.5 rounded-2xl border border-blue-900 flex items-center justify-between shadow-sm text-white">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-orange-500 flex items-center justify-center text-white shadow-md shadow-amber-600/30">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-white shadow-md">
             <Wrench className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -140,11 +140,11 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
               <h3 className="text-xs font-black text-white uppercase tracking-wider">
                 Solicitar Novo Chamado
               </h3>
-              <span className="text-[9px] px-1.5 py-0.2 rounded-full font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+              <span className="text-[9px] px-1.5 py-0.2 rounded-full font-bold bg-amber-400/20 text-amber-300 border border-amber-400/40">
                 SLA Express
               </span>
             </div>
-            <p className="text-[10px] text-slate-400">
+            <p className="text-[10px] text-blue-200/80">
               Abertura de Ordem de Serviço técnica para {activeClient.nome_completo}
             </p>
           </div>
@@ -153,7 +153,7 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
         {onCancel && (
           <button
             onClick={onCancel}
-            className="p-1 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition"
+            className="p-1 rounded-lg bg-white/10 text-white hover:bg-white/20 transition"
             title="Voltar para Aparelhos"
           >
             <X className="w-4 h-4" />
@@ -164,9 +164,9 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
       <form onSubmit={handleSubmit} className="space-y-3.5 text-xs">
         {/* Step 1: Select Equipment */}
         <div className="space-y-1.5">
-          <label className="text-[11px] font-bold text-slate-300 flex items-center justify-between">
+          <label className="text-[11px] font-bold text-slate-700 flex items-center justify-between">
             <span className="flex items-center gap-1.5">
-              <span className="w-4 h-4 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center text-[10px] font-extrabold border border-sky-500/30">
+              <span className="w-4 h-4 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-[10px] font-extrabold border border-blue-200">
                 1
               </span>
               Selecione o Aparelho que Precisa de Atenção:
@@ -174,7 +174,7 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
             <button
               type="button"
               onClick={() => setIsScannerOpen(true)}
-              className="text-[10px] text-sky-400 hover:underline font-normal flex items-center gap-0.5"
+              className="text-[10px] text-blue-700 hover:underline font-semibold flex items-center gap-0.5"
             >
               <span>Escanear QR</span>
               <ChevronRight className="w-2.5 h-2.5" />
@@ -182,7 +182,7 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
           </label>
 
           {clientEquipments.length === 0 ? (
-            <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-center text-slate-400 text-xs">
+            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center text-slate-500 text-xs">
               Nenhum ar-condicionado cadastrado para este cliente.
             </div>
           ) : (
@@ -195,7 +195,7 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
                   const found = clientEquipments.find((eq) => eq.id === e.target.value);
                   if (found) setSelectedEquipment(found);
                 }}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-amber-500 font-medium"
+                className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 font-medium"
               >
                 {clientEquipments.map((eq) => (
                   <option key={eq.id} value={eq.id}>
@@ -206,15 +206,15 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
 
               {/* Current equipment preview chip */}
               {currentEquipment && (
-                <div className="p-2.5 bg-slate-950/70 rounded-xl border border-slate-800/80 flex items-center justify-between text-[11px]">
+                <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-[11px]">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-mono font-bold text-sky-400 text-xs">
+                      <span className="font-mono font-bold text-blue-700 text-xs">
                         {currentEquipment.tag_patrimonio}
                       </span>
-                      <span className="text-slate-300 font-semibold">{currentEquipment.name}</span>
+                      <span className="text-slate-800 font-semibold">{currentEquipment.name}</span>
                     </div>
-                    <p className="text-[10px] text-slate-400 mt-0.5">
+                    <p className="text-[10px] text-slate-500 mt-0.5">
                       {currentEquipment.endereco_apelido} • {currentEquipment.marca} {currentEquipment.capacidade_btu.toLocaleString('pt-BR')} BTUs
                     </p>
                   </div>
@@ -223,10 +223,10 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
                     <span
                       className={`text-[9px] font-bold px-2 py-0.5 rounded-full inline-block ${
                         currentEquipment.daysRemaining <= 0
-                          ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40'
+                          ? 'bg-rose-100 text-rose-700 border border-rose-200'
                           : currentEquipment.daysRemaining <= 30
-                          ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                          : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                          ? 'bg-amber-100 text-amber-700 border border-amber-200'
+                          : 'bg-emerald-100 text-emerald-700 border border-emerald-200'
                       }`}
                     >
                       {currentEquipment.daysRemaining <= 0
@@ -244,8 +244,8 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
 
         {/* Step 2: Service Type */}
         <div className="space-y-1.5 pt-1">
-          <label className="text-[11px] font-bold text-slate-300 flex items-center gap-1.5">
-            <span className="w-4 h-4 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center text-[10px] font-extrabold border border-sky-500/30">
+          <label className="text-[11px] font-bold text-slate-700 flex items-center gap-1.5">
+            <span className="w-4 h-4 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-[10px] font-extrabold border border-blue-200">
               2
             </span>
             Tipo de Atendimento Necessário:
@@ -257,14 +257,14 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
               onClick={() => handleSelectServiceType('MANUTENCAO_CORRETIVA_DEFEITO')}
               className={`p-2.5 rounded-xl text-left border transition relative flex flex-col justify-between ${
                 tipoServico === 'MANUTENCAO_CORRETIVA_DEFEITO'
-                  ? 'bg-rose-950/30 border-rose-500 text-white shadow-md shadow-rose-950/50'
-                  : 'bg-slate-950/80 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                  ? 'bg-rose-50 border-rose-400 text-rose-950 shadow-xs'
+                  : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300'
               }`}
             >
               <div>
-                <Wrench className={`w-4 h-4 mb-1.5 ${tipoServico === 'MANUTENCAO_CORRETIVA_DEFEITO' ? 'text-rose-400' : 'text-slate-500'}`} />
+                <Wrench className={`w-4 h-4 mb-1.5 ${tipoServico === 'MANUTENCAO_CORRETIVA_DEFEITO' ? 'text-rose-600' : 'text-slate-400'}`} />
                 <span className="font-bold text-[11px] block leading-tight">Reparo / Defeito</span>
-                <span className="text-[9px] opacity-75 leading-tight block mt-0.5">Não gela ou vazando</span>
+                <span className="text-[9px] opacity-80 leading-tight block mt-0.5">Não gela ou vazando</span>
               </div>
               {tipoServico === 'MANUTENCAO_CORRETIVA_DEFEITO' && (
                 <div className="w-2 h-2 rounded-full bg-rose-500 self-end mt-1" />
@@ -276,14 +276,14 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
               onClick={() => handleSelectServiceType('MANUTENCAO_PREVENTIVA_6_MESES')}
               className={`p-2.5 rounded-xl text-left border transition relative flex flex-col justify-between ${
                 tipoServico === 'MANUTENCAO_PREVENTIVA_6_MESES'
-                  ? 'bg-amber-950/30 border-amber-500 text-white shadow-md shadow-amber-950/50'
-                  : 'bg-slate-950/80 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                  ? 'bg-amber-50 border-amber-400 text-amber-950 shadow-xs'
+                  : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300'
               }`}
             >
               <div>
-                <ShieldCheck className={`w-4 h-4 mb-1.5 ${tipoServico === 'MANUTENCAO_PREVENTIVA_6_MESES' ? 'text-amber-400' : 'text-slate-500'}`} />
+                <ShieldCheck className={`w-4 h-4 mb-1.5 ${tipoServico === 'MANUTENCAO_PREVENTIVA_6_MESES' ? 'text-amber-600' : 'text-slate-400'}`} />
                 <span className="font-bold text-[11px] block leading-tight">Revisão 6 Meses</span>
-                <span className="text-[9px] opacity-75 leading-tight block mt-0.5">Higienização e PMOC</span>
+                <span className="text-[9px] opacity-80 leading-tight block mt-0.5">Higienização e PMOC</span>
               </div>
               {tipoServico === 'MANUTENCAO_PREVENTIVA_6_MESES' && (
                 <div className="w-2 h-2 rounded-full bg-amber-500 self-end mt-1" />
@@ -295,17 +295,17 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
               onClick={() => handleSelectServiceType('INSTALACAO_NOVO_APARELHO')}
               className={`p-2.5 rounded-xl text-left border transition relative flex flex-col justify-between ${
                 tipoServico === 'INSTALACAO_NOVO_APARELHO'
-                  ? 'bg-blue-950/30 border-blue-500 text-white shadow-md shadow-blue-950/50'
-                  : 'bg-slate-950/80 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                  ? 'bg-blue-50 border-blue-600 text-blue-950 shadow-xs'
+                  : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300'
               }`}
             >
               <div>
-                <Zap className={`w-4 h-4 mb-1.5 ${tipoServico === 'INSTALACAO_NOVO_APARELHO' ? 'text-blue-400' : 'text-slate-500'}`} />
+                <Zap className={`w-4 h-4 mb-1.5 ${tipoServico === 'INSTALACAO_NOVO_APARELHO' ? 'text-blue-600' : 'text-slate-400'}`} />
                 <span className="font-bold text-[11px] block leading-tight">Instalação</span>
-                <span className="text-[9px] opacity-75 leading-tight block mt-0.5">Novo Ponto</span>
+                <span className="text-[9px] opacity-80 leading-tight block mt-0.5">Novo Ponto</span>
               </div>
               {tipoServico === 'INSTALACAO_NOVO_APARELHO' && (
-                <div className="w-2 h-2 rounded-full bg-blue-500 self-end mt-1" />
+                <div className="w-2 h-2 rounded-full bg-blue-600 self-end mt-1" />
               )}
             </button>
           </div>
@@ -313,7 +313,7 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
 
         {/* Step 3: Quick Problem Shortcuts */}
         <div className="space-y-1.5 pt-1">
-          <label className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
+          <label className="text-[10px] uppercase font-bold text-slate-500 tracking-wider block">
             Toque para Adicionar o Sintoma Rápido:
           </label>
           <div className="flex flex-wrap gap-1.5">
@@ -322,7 +322,7 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
                 type="button"
                 key={idx}
                 onClick={() => handleApplyPreset(preset.text)}
-                className="text-[10px] px-2.5 py-1 rounded-full bg-slate-950/90 text-slate-300 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition active:scale-95 flex items-center gap-1"
+                className="text-[10px] px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-900 transition active:scale-95 flex items-center gap-1 font-medium"
               >
                 <span>{preset.label}</span>
               </button>
@@ -332,14 +332,14 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
 
         {/* Step 4: Description textarea */}
         <div className="space-y-1.5 pt-1">
-          <label className="text-[11px] font-bold text-slate-300 flex items-center justify-between">
+          <label className="text-[11px] font-bold text-slate-700 flex items-center justify-between">
             <span className="flex items-center gap-1.5">
-              <span className="w-4 h-4 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center text-[10px] font-extrabold border border-sky-500/30">
+              <span className="w-4 h-4 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-[10px] font-extrabold border border-blue-200">
                 3
               </span>
               Relato do Problema ou Observações:
             </span>
-            <span className="text-[10px] text-slate-500 font-normal">
+            <span className="text-[10px] text-slate-400 font-normal">
               {descricao.length} caracteres
             </span>
           </label>
@@ -350,7 +350,7 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
             onChange={(e) => setDescricao(e.target.value)}
             placeholder="Ex: O ar condicionado foi ligado pela manhã e parou de resfriar, apresentando barulho na condensadora externa..."
             required
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-500 resize-none leading-relaxed"
+            className="w-full bg-white border border-slate-300 rounded-xl p-3 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 resize-none leading-relaxed"
           />
         </div>
 
@@ -358,16 +358,16 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
         <div className="grid grid-cols-2 gap-2 pt-1">
           {/* Priority */}
           <div className="space-y-1">
-            <label className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
+            <label className="text-[10px] uppercase font-bold text-slate-500 tracking-wider block">
               Urgência:
             </label>
             <div className="grid grid-cols-3 gap-1">
               {(['BAIXA', 'MEDIA', 'ALTA_URGENCIA'] as OrderPriority[]).map((p) => {
                 const isSelected = prioridade === p;
                 let activeStyle = '';
-                if (p === 'ALTA_URGENCIA') activeStyle = isSelected ? 'bg-rose-600 text-white font-bold border-rose-500' : '';
-                else if (p === 'MEDIA') activeStyle = isSelected ? 'bg-amber-600 text-white font-bold border-amber-500' : '';
-                else activeStyle = isSelected ? 'bg-emerald-600 text-white font-bold border-emerald-500' : '';
+                if (p === 'ALTA_URGENCIA') activeStyle = isSelected ? 'bg-rose-600 text-white font-bold border-rose-500 shadow-xs' : '';
+                else if (p === 'MEDIA') activeStyle = isSelected ? 'bg-amber-600 text-white font-bold border-amber-500 shadow-xs' : '';
+                else activeStyle = isSelected ? 'bg-emerald-600 text-white font-bold border-emerald-500 shadow-xs' : '';
 
                 return (
                   <button
@@ -377,7 +377,7 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
                     className={`py-1.5 rounded-lg text-center text-[10px] border transition ${
                       isSelected
                         ? activeStyle
-                        : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                        : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
                     }`}
                   >
                     {p === 'ALTA_URGENCIA' ? 'Alta 🚨' : p === 'MEDIA' ? 'Média' : 'Baixa'}
@@ -389,21 +389,21 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
 
           {/* Preferred Date */}
           <div className="space-y-1">
-            <label className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
+            <label className="text-[10px] uppercase font-bold text-slate-500 tracking-wider block">
               Data de Preferência:
             </label>
             <input
               type="date"
               value={preferenciaData}
               onChange={(e) => setPreferenciaData(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-lg px-2 py-1.5 text-[11px] text-slate-200 focus:outline-none focus:border-amber-500"
+              className="w-full bg-white border border-slate-300 rounded-lg px-2 py-1.5 text-[11px] text-slate-800 focus:outline-none focus:border-blue-600"
             />
           </div>
         </div>
 
         {/* Turno / Shift Preference */}
         <div className="space-y-1">
-          <label className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
+          <label className="text-[10px] uppercase font-bold text-slate-500 tracking-wider block">
             Melhor Turno para Receber o Técnico:
           </label>
           <div className="grid grid-cols-3 gap-1 text-[10px]">
@@ -412,8 +412,8 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
               onClick={() => setSelectedShift('MANHA')}
               className={`py-1.5 px-2 rounded-lg border transition ${
                 selectedShift === 'MANHA'
-                  ? 'bg-sky-500/20 border-sky-400 text-sky-200 font-bold'
-                  : 'bg-slate-950 border-slate-800 text-slate-400'
+                  ? 'bg-blue-50 border-blue-600 text-blue-900 font-bold'
+                  : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
               }`}
             >
               Manhã (08h-12h)
@@ -423,8 +423,8 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
               onClick={() => setSelectedShift('TARDE')}
               className={`py-1.5 px-2 rounded-lg border transition ${
                 selectedShift === 'TARDE'
-                  ? 'bg-sky-500/20 border-sky-400 text-sky-200 font-bold'
-                  : 'bg-slate-950 border-slate-800 text-slate-400'
+                  ? 'bg-blue-50 border-blue-600 text-blue-900 font-bold'
+                  : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
               }`}
             >
               Tarde (13h-18h)
@@ -434,8 +434,8 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
               onClick={() => setSelectedShift('COMERCIAL')}
               className={`py-1.5 px-2 rounded-lg border transition ${
                 selectedShift === 'COMERCIAL'
-                  ? 'bg-sky-500/20 border-sky-400 text-sky-200 font-bold'
-                  : 'bg-slate-950 border-slate-800 text-slate-400'
+                  ? 'bg-blue-50 border-blue-600 text-blue-900 font-bold'
+                  : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
               }`}
             >
               Dia Todo
@@ -450,23 +450,23 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
             onClick={() => setSimulatedPhoto(!simulatedPhoto)}
             className={`w-full p-2.5 rounded-xl border border-dashed transition flex items-center justify-between text-xs ${
               simulatedPhoto
-                ? 'bg-emerald-950/30 border-emerald-500/50 text-emerald-300'
-                : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                ? 'bg-emerald-50 border-emerald-400 text-emerald-800'
+                : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
             }`}
           >
             <div className="flex items-center gap-2">
-              <Camera className="w-4 h-4 text-sky-400" />
+              <Camera className="w-4 h-4 text-blue-600" />
               <span>
                 {simulatedPhoto ? 'Foto anexada com sucesso (foto_defeito.jpg)' : 'Anexar Foto da Evaporadora / Defeito'}
               </span>
             </div>
             {simulatedPhoto ? (
-              <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded-full flex items-center gap-1">
+              <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full flex items-center gap-1">
                 <Check className="w-3 h-3" />
                 Anexo OK
               </span>
             ) : (
-              <span className="text-[10px] text-slate-500">Opcional</span>
+              <span className="text-[10px] text-slate-400">Opcional</span>
             )}
           </button>
         </div>
@@ -477,7 +477,7 @@ export default function NewTicketView({ onCancel, onSuccess }: NewTicketViewProp
             id="btn-submit-ticket"
             type="submit"
             disabled={isSubmitting || !descricao.trim()}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:to-orange-500 text-white font-extrabold text-xs shadow-lg shadow-amber-600/30 transition transform active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full py-3 rounded-xl bg-[#0a2540] hover:bg-blue-900 text-white font-extrabold text-xs shadow-md transition transform active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {isSubmitting ? (
               <span>Gerando Protocolo de O.S...</span>

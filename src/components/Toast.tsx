@@ -19,31 +19,31 @@ export default function Toast() {
         return (
           <div
             key={toast.id}
-            className={`pointer-events-auto flex items-start gap-3 p-4 rounded-xl shadow-2xl border backdrop-blur-md transition-all duration-300 animate-in slide-in-from-bottom-5 ${
+            className={`pointer-events-auto flex items-start gap-3 p-4 rounded-2xl shadow-xl border backdrop-blur-md transition-all duration-300 animate-in slide-in-from-bottom-5 bg-white ${
               isSuccess
-                ? 'bg-emerald-950/90 border-emerald-500/50 text-emerald-100'
+                ? 'border-emerald-200 text-slate-900'
                 : isError
-                ? 'bg-rose-950/90 border-rose-500/50 text-rose-100'
+                ? 'border-rose-200 text-slate-900'
                 : isWarning
-                ? 'bg-amber-950/90 border-amber-500/50 text-amber-100'
-                : 'bg-slate-900/95 border-sky-500/50 text-sky-100'
+                ? 'border-amber-200 text-slate-900'
+                : 'border-blue-200 text-slate-900'
             }`}
           >
             <div className="mt-0.5 shrink-0">
-              {isSuccess && <CheckCircle2 className="w-5 h-5 text-emerald-400" />}
-              {isError && <XCircle className="w-5 h-5 text-rose-400" />}
-              {isWarning && <AlertTriangle className="w-5 h-5 text-amber-400" />}
-              {!isSuccess && !isError && !isWarning && <Info className="w-5 h-5 text-sky-400" />}
+              {isSuccess && <CheckCircle2 className="w-5 h-5 text-emerald-600" />}
+              {isError && <XCircle className="w-5 h-5 text-rose-600" />}
+              {isWarning && <AlertTriangle className="w-5 h-5 text-amber-600" />}
+              {!isSuccess && !isError && !isWarning && <Info className="w-5 h-5 text-blue-600" />}
             </div>
 
             <div className="flex-1 pr-2">
-              <h4 className="text-sm font-semibold leading-tight">{toast.title}</h4>
-              <p className="text-xs mt-1 text-slate-300 leading-relaxed">{toast.message}</p>
+              <h4 className="text-sm font-bold leading-tight text-slate-900">{toast.title}</h4>
+              <p className="text-xs mt-1 text-slate-600 leading-relaxed">{toast.message}</p>
             </div>
 
             <button
               onClick={() => removeToast(toast.id)}
-              className="shrink-0 text-slate-400 hover:text-white transition-colors"
+              className="shrink-0 text-slate-400 hover:text-slate-700 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>

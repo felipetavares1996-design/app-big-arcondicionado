@@ -17,16 +17,16 @@ export default function BatchPrintModal() {
   });
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-slate-950/95 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex flex-col bg-slate-950/70 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
       {/* Top Floating Control Bar (Hidden during print) */}
-      <header className="sticky top-0 z-50 bg-slate-900 border-b border-slate-800 p-4 flex items-center justify-between no-print shadow-xl">
+      <header className="sticky top-0 z-50 bg-[#0a192f] border-b border-blue-900/40 p-4 flex items-center justify-between no-print shadow-xl">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-blue-500/20 text-blue-300 flex items-center justify-center">
             <Printer className="w-5 h-5" />
           </div>
           <div>
             <h3 className="text-sm font-bold text-white">Impressão em Lote de Etiquetas PMOC (Folha A4)</h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-blue-200">
               Grade pré-formatada para papel adesivo PIMACO / A4 • {filtered.length} etiquetas geradas
             </p>
           </div>
@@ -35,11 +35,11 @@ export default function BatchPrintModal() {
         <div className="flex items-center gap-3">
           {/* Client Filter */}
           <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-400 font-medium hidden sm:inline">Cliente:</span>
+            <span className="text-xs text-blue-200 font-medium hidden sm:inline">Cliente:</span>
             <select
               value={selectedClientFilter}
               onChange={(e) => setSelectedClientFilter(e.target.value)}
-              className="bg-slate-950 border border-slate-700 text-slate-200 text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:border-sky-500"
+              className="bg-[#0a2540] border border-blue-800 text-white text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:border-blue-400"
             >
               <option value="Todos">Todos os Clientes</option>
               {clients.map((c) => (
@@ -52,7 +52,7 @@ export default function BatchPrintModal() {
 
           <button
             onClick={() => window.print()}
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-sky-600/30 transition transform active:scale-95"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-blue-600/30 transition transform active:scale-95"
           >
             <Printer className="w-4 h-4" />
             <span>Imprimir Folha A4 Agora</span>
@@ -60,7 +60,7 @@ export default function BatchPrintModal() {
 
           <button
             onClick={() => setIsBatchPrintModalOpen(false)}
-            className="p-2 rounded-full bg-slate-800 text-slate-400 hover:text-white transition"
+            className="p-2 rounded-full bg-white/10 text-white/80 hover:text-white transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -69,9 +69,9 @@ export default function BatchPrintModal() {
 
       {/* Guide notice (hidden in print) */}
       <div className="max-w-4xl mx-auto w-full px-4 pt-4 no-print">
-        <div className="bg-sky-950/40 border border-sky-500/30 rounded-2xl p-3 flex items-center justify-between text-xs text-sky-200">
+        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-3 flex items-center justify-between text-xs text-blue-900 shadow-sm">
           <div className="flex items-center gap-2">
-            <Scissors className="w-4 h-4 text-sky-400 shrink-0" />
+            <Scissors className="w-4 h-4 text-blue-600 shrink-0" />
             <span>
               <strong>Dica de Impressão:</strong> As linhas pontilhadas cinzas servem como guias de corte. O tipo de unidade (EVAPORADORA, CONDENSADORA ou CONJUNTO_SPLIT) está em destaque.
             </span>
@@ -80,7 +80,7 @@ export default function BatchPrintModal() {
       </div>
 
       {/* A4 Sheet Preview Canvas */}
-      <div className="p-4 sm:p-8 flex items-center justify-center">
+      <div className="p-4 sm:p-8 flex items-center justify-center bg-slate-100">
         <div
           id="printable-a4-sheet"
           className="w-full max-w-4xl bg-white text-slate-900 rounded-2xl p-8 shadow-2xl border border-slate-300 print:shadow-none print:border-none print:p-0 print:m-0"
@@ -116,14 +116,14 @@ export default function BatchPrintModal() {
                 {/* Sticker Header */}
                 <div className="flex items-center justify-between border-b border-slate-900 pb-1.5 mb-2">
                   <div className="flex items-center gap-1.5">
-                    <div className="w-6 h-6 rounded bg-slate-950 text-white font-black text-xs flex items-center justify-center">
+                    <div className="w-6 h-6 rounded bg-[#0a192f] text-white font-black text-xs flex items-center justify-center">
                       BIG
                     </div>
                     <div>
                       <h4 className="text-[10px] font-black uppercase leading-none text-slate-950">
                         BIG ARCONDICIONADO
                       </h4>
-                      <span className="text-[7.5px] font-semibold text-slate-600 block">
+                      <span className="text-[7.5px] font-semibold text-blue-900 block">
                         PMOC LEI 13.589/2018
                       </span>
                     </div>
@@ -131,7 +131,7 @@ export default function BatchPrintModal() {
 
                   {/* Prominent Unit Type */}
                   <div className="text-right">
-                    <span className="text-[8px] font-black uppercase bg-slate-950 text-white px-2 py-0.5 rounded tracking-wide">
+                    <span className="text-[8px] font-black uppercase bg-[#0a192f] text-white px-2 py-0.5 rounded tracking-wide">
                       {eq.tipo_unidade}
                     </span>
                     <p className="text-[7px] font-mono text-slate-600 font-semibold mt-0.5">PAT: {eq.tag_patrimonio}</p>
